@@ -17,7 +17,7 @@ function App() {
   return (
     <AppContainer>
       <h1 className="tracking-wide font-serif text-2xl p-2 bg-slate-200 rounded-lg">
-        StratFS - Full Stack Test - Jonathan Sanchez
+        StratFS - Full Stack Test - Norman Pegues
       </h1>
       <CreditorForm />
     </AppContainer>
