@@ -1,0 +1,16 @@
+{
+    "dependencies": {
+      "mongoose": "7.0.3",
+      "cors": "2.8.5",
+      "express": "4.18.2",
+      "nodemon": "2.0.22"
+    },
+    "scripts": {
+      "dev": "nodemon --max-watch 10000000 --watch src",
+      "start": "nodemon server.js --max-watch 100000 --watch src"
+    },
+    "nodemonConfig": {
+      "ignore": ["node_modules"]
+    }
+  }
+  
