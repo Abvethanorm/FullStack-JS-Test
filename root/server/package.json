@@ -1,16 +1,13 @@
 {
     "dependencies": {
-      "mongoose": "7.0.3",
-      "cors": "2.8.5",
-      "express": "4.18.2",
-      "nodemon": "2.0.22"
+        "cors": "2.8.5",
+        "dotenv": "^16.0.3",
+        "express": "4.18.2",
+        "mongoose": "7.0.3",
+        "node-dev": "^7.0.0"
     },
     "scripts": {
-      "dev": "nodemon --max-watch 10000000 --watch src",
-      "start": "nodemon server.js --max-watch 100000 --watch src"
-    },
-    "nodemonConfig": {
-      "ignore": ["node_modules"]
+        "dev": "node-dev --respawn --notify --watch ./src server.js",
+        "start": "node server.js"
     }
-  }
-  
+}
