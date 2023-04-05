@@ -7,7 +7,7 @@
         "node-dev": "^7.0.0"
     },
     "scripts": {
-        "dev": "node-dev --respawn --notify --watch ./src server.js",
+        "dev": "node-dev --respawn --notify --watch ./src --ignore node_modules server.js",
         "start": "node server.js"
     }
 }
