@@ -18,13 +18,15 @@ jobs:
       - run:
           name: Build and push Docker images
           command: |
-            docker-compose build
-            docker tag my-backend-image:latest docker.io/normthelinuxguy/my-backend-image:latest
-            docker push docker.io/normthelinuxguy/my-backend-image:latest
+            docker build -t server .
+            docker tag server:latest docker.io/normthelinuxguy/my-backend-image:latest
+            docker push docker.io/normthelinuxguy/server:latest
+            docker build -t my-nginx-image ./nginx
             docker tag my-nginx-image:latest docker.io/normthelinuxguy/my-nginx-image:latest
             docker push docker.io/normthelinuxguy/my-nginx-image:latest
-            docker tag my-frontend-image:latest docker.io/normthelinuxguy/my-frontend-image:latest
-            docker push docker.io/normthelinuxguy/my-frontend-image:latest
+            docker build -t client . 
+            docker tag client:latest docker.io/normthelinuxguy/client
+            docker push docker.io/normthelinuxguy/client:latest
 
   test:
     docker:
