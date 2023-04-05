@@ -35,6 +35,9 @@ jobs:
           name: Run backend tests
           command: |
             docker-compose run 
+            docker-compose build server
+            docker tag my-backend-image:latest docker.io/normthelinuxguy/my-backend-image:latest
+            docker push docker.io/normthelinuxguyy/my-backend-image:latest
 
 workflows:
   version: 2
