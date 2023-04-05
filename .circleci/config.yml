@@ -20,13 +20,13 @@ jobs:
           command: |
             docker build -t server .
             docker tag server:latest docker.io/normthelinuxguy/my-backend-image:latest
-            docker push docker.io/normthelinuxguy/server:latest
+            docker push docker.io/normthelinuxguy/my-backend-image:latest
             docker build -t my-nginx-image ./nginx
             docker tag my-nginx-image:latest docker.io/normthelinuxguy/my-nginx-image:latest
             docker push docker.io/normthelinuxguy/my-nginx-image:latest
             docker build -t client . 
-            docker tag client:latest docker.io/normthelinuxguy/client
-            docker push docker.io/normthelinuxguy/client:latest
+            docker tag client:latest docker.io/normthelinuxguy/my-frontend-image:latest
+            docker push docker.io/normthelinuxguy/my-frontend-image:latest
 
   test:
     docker:
