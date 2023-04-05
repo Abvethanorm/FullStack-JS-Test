@@ -34,7 +34,7 @@ jobs:
       - run:
           name: Run backend tests
           command: |
-            docker-compose run --rm backend npm test
+            docker-compose run 
 
 workflows:
   version: 2
