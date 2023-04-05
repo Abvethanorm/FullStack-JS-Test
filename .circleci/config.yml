@@ -6,23 +6,22 @@ jobs:
       - image: docker:20.10.9
     steps:
       - checkout
+      - run:
+          name: Install Docker Compose
+          command: |
+            apt-get update
+            apt-get install -y curl
+            curl -L https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+            chmod +x /usr/local/bin/docker-compose
       - setup_remote_docker
       - run:
-          name: Build backend image
+          name: Build and push Docker images
           command: |
-            docker-compose build server
+            docker-compose build
             docker tag my-backend-image:latest docker.io/normthelinuxguy/my-backend-image:latest
             docker push docker.io/normthelinuxguy/my-backend-image:latest
-      - run:
-          name: Build nginx image
-          command: |
-            docker-compose build nginx
             docker tag my-nginx-image:latest docker.io/normthelinuxguy/my-nginx-image:latest
             docker push docker.io/normthelinuxguy/my-nginx-image:latest
-      - run:
-          name: Build frontend image
-          command: |
-            docker-compose build client
             docker tag my-frontend-image:latest docker.io/normthelinuxguy/my-frontend-image:latest
             docker push docker.io/normthelinuxguy/my-frontend-image:latest
 
