@@ -16,6 +16,9 @@ jobs:
             sudo chmod +x /usr/local/bin/docker-compose
       - setup_remote_docker
       - run:
+          name: Login to Docker Hub
+          command: echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
+      - run:
           name: Build and push Docker images
           command: |
             docker build -t server ./server
