@@ -27,7 +27,7 @@ jobs:
             docker build -t my-nginx-image ./nginx
             docker tag my-nginx-image:latest docker.io/normthelinuxguy/my-nginx-image:latest
             docker push docker.io/normthelinuxguy/my-nginx-image:latest
-            docker build -t client . 
+            docker build -t client ./client 
             docker tag client:latest docker.io/normthelinuxguy/my-frontend-image:latest
             docker push docker.io/normthelinuxguy/my-frontend-image:latest
 
