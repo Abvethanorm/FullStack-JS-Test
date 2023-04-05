@@ -19,12 +19,12 @@ jobs:
             docker-compose build nginx
             docker tag my-nginx-image:latest my-registry/my-nginx-image:latest
             docker push my-registry/my-nginx-image:latest
-       - run:
-        name: Build frontend image
-        command: |
-          docker-compose build client
-          docker tag my-frontend-image:latest my-registry/my-frontend-image:latest
-          docker push my-registry/my-frontend-image:latest
+      - run:
+          name: Build frontend image
+          command: |
+            docker-compose build client
+            docker tag my-frontend-image:latest my-registry/my-frontend-image:latest
+            docker push my-registry/my-frontend-image:latest
 
   test:
     docker:
