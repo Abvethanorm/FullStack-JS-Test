@@ -11,20 +11,20 @@ jobs:
           name: Build backend image
           command: |
             docker-compose build server
-            docker tag my-backend-image:latest my-registry/my-backend-image:latest
-            docker push my-registry/my-backend-image:latest
+            docker tag my-backend-image:latest docker.io/normthelinuxguy/my-backend-image:latest
+            docker push docker.io/normthelinuxguy/my-backend-image:latest
       - run:
           name: Build nginx image
           command: |
             docker-compose build nginx
-            docker tag my-nginx-image:latest my-registry/my-nginx-image:latest
-            docker push my-registry/my-nginx-image:latest
+            docker tag my-nginx-image:latest docker.io/normthelinuxguy/my-nginx-image:latest
+            docker push docker.io/normthelinuxguy/my-nginx-image:latest
       - run:
           name: Build frontend image
           command: |
             docker-compose build client
-            docker tag my-frontend-image:latest my-registry/my-frontend-image:latest
-            docker push my-registry/my-frontend-image:latest
+            docker tag my-frontend-image:latest docker.io/normthelinuxguy/my-frontend-image:latest
+            docker push docker.io/normthelinuxguy/my-frontend-image:latest
 
   test:
     docker:
@@ -34,11 +34,7 @@ jobs:
       - run:
           name: Run backend tests
           command: |
-            docker-compose run 
-            docker-compose build server
-            docker tag my-backend-image:latest docker.io/normthelinuxguy/my-backend-image:latest
-            docker push docker.io/normthelinuxguyy/my-backend-image:latest
-
+            docker-compose
 workflows:
   version: 2
   build-and-test:
