@@ -18,7 +18,7 @@ jobs:
       - run:
           name: Build and push Docker images
           command: |
-            docker build -t server .
+            docker build -t server ./server
             docker tag server:latest docker.io/normthelinuxguy/my-backend-image:latest
             docker push docker.io/normthelinuxguy/my-backend-image:latest
             docker build -t my-nginx-image ./nginx
