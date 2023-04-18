@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: dockercreds
+type: kubernetes.io/basic-auth
+stringData:
+  username: bm9ybXRoZWxpbnV4Z3V5   
+  password: RnVlZ29MaWtlTm9ybXkx

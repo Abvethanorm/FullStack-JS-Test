@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: dockercreds
+type: kubernetes.io/basic-auth
+stringData:
+  username: bm9ybXRoZWxpbnV4Z3V5   
+  password: RnVlZ29MaWtlTm9ybXkx
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  selector:
+    matchLabels:
+      app: myapp
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      imagePullSecrets:
+        - name: dockercreds
+      containers:
+        - name: frontend
+          image: docker.io/normthelinuxguy/my-frontend-image:latest
+          volumeMounts:
+            - name: client-volume
+              mountPath: /usr/share/nginx/html
+        - name: nginx
+          image: docker.io/normthelinuxguy/my-nginx-image:latest
+          ports:
+            - containerPort: 3051
+          volumeMounts:
+            - name: nginx-configmap
+              mountPath: /etc/nginx/conf.d/default.conf
+              subPath: default.conf
+        - name: server
+          image: docker.io/normthelinuxguy/my-backend-image:latest
+          env:
+            - name: MONGO_USER
+              value: admin
+            - name: MONGO_PASSWORD
+              value: admin
+      volumes:
+        - name: client-volume
+          configMap:
+            name: client-configmap
+            defaultMode: 420
+        - name: nginx-configmap
+          configMap:
+            name: nginx-configmap
+            defaultMode: 420
+        - name: server-configmap
+          configMap:
+            name: server-configmap
+            defaultMode: 420
