@@ -60,7 +60,7 @@ jobs:
       - checkout
       - run:
           name: Install kubectl
-          command: sudo install_packages kubectl
+          command: sudo apt install kubectl
       - run:
           name: Set minikube IP address
           command: echo "192.168.59.101/24" > ip.txt
