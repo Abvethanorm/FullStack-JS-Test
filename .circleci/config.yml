@@ -55,7 +55,7 @@ jobs:
             docker tag client:latest docker.io/normthelinuxguy/my-frontend-image:latest
             docker push docker.io/normthelinuxguy/my-frontend-image:latest
 
- deploy:
+  deploy:
    
     docker:
       - image: circleci/kubernetes:latest
