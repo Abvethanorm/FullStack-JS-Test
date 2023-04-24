@@ -55,7 +55,7 @@ jobs:
   deploy:
    
     docker:
-      - image: bitnami/kubectl:latest
+      - image: circleci/node:latest
     steps:
       - checkout
       - run:
