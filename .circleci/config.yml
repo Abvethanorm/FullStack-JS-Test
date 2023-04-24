@@ -53,7 +53,7 @@ jobs:
             docker push docker.io/normthelinuxguy/my-frontend-image:latest
 
   deploy:
-    name: Deploy to Kubernetes
+   
     docker:
       - image: bitnami/kubectl:latest
     steps:
