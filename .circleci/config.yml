@@ -5,7 +5,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "<your-ssh-key-fingerprint>"
+            - "circlecikey"
       - checkout
       - run:
           name: Install Git and SSH
@@ -63,7 +63,11 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - build
-      - deploy:
-          requires:
-            - build
+      - build:
+          - add_ssh_keys:
+              fingerprints:
+                - "SHA256:5e9ee6258a964d61a018c36575b80f4f4d3b3b1c4c2aa12d9eb71fcb30802427"
+              user:
+                email: "norman.pegues@gmail.com"
+                name: "Abvethanorm"
+      - deploy
