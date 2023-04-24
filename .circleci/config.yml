@@ -53,6 +53,7 @@ jobs:
             docker push docker.io/normthelinuxguy/my-frontend-image:latest
 
   deploy:
+    name: Deploy to Kubernetes
     docker:
       - image: bitnami/kubectl:latest
     steps:
@@ -66,8 +67,8 @@ jobs:
       - run:
           name: Start minikube and set context
           command: |
-            sudo minikube start --vm-driver=none --apiserver-ips 192.168.59.101 --apiserver-name=192.168.59.101 --kubernetes-version v1.22.2
-            sudo chown -R circle
+            sudo minikube start --vm-driver
+
   workflows:
   build-and-deploy:
     jobs:
