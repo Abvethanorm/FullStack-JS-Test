@@ -65,4 +65,4 @@ jobs:
           command: |
             kubectl set image deployment/server-deployment server=docker.io/normthelinuxguy/my-backend-image:latest
             kubectl set image deployment/nginx-deployment nginx=docker.io/normthelinuxguy/my-nginx-image:latest
-            kubectl set image deployment/client-deployment client=docker.io/normthelinuxguy
+            kubectl set image deployment/client-deployment client=docker.io/normthelinuxguy/my-frontend-image:latest
