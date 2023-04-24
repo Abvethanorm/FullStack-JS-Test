@@ -70,8 +70,8 @@ workflows:
             branches:
               only:
                 - master
-          requires:
-            - approve
+          
+          
       - deploy:
           context: my-context
           filters:
