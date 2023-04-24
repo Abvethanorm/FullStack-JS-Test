@@ -76,5 +76,3 @@ workflows:
           context: my-context
           filters:
             branches:
-              only:
-                -
