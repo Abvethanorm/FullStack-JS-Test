@@ -66,10 +66,5 @@ workflows:
   build-and-deploy:
     jobs:
       - build:
-          - add_ssh_keys:
-              fingerprints:
-                - "SHA256:5e9ee6258a964d61a018c36575b80f4f4d3b3b1c4c2aa12d9eb71fcb30802427"
-              user:
-                email: "norman.pegues@gmail.com"
-                name: "Abvethanorm"
+         
       - deploy
