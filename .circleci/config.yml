@@ -7,44 +7,64 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install Docker Compose
+          name: Install kubectl and Minikube
           command: |
             sudo apt-get update
-            sudo apt-get -y install curl
-            curl -L https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m) -o docker-compose
-            sudo mv docker-compose /usr/local/bin/docker-compose
-            sudo chmod +x /usr/local/bin/docker-compose
-      - setup_remote_docker
+            sudo apt-get -y install apt-transport-https gnupg curl
+            curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+            echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+            sudo apt-get update
+            sudo apt-get -y install kubectl
+            curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+            sudo install minikube-linux-amd64 /usr/local/bin/minikube
+      - run:
+          name: Start Minikube
+          command: |
+            sudo minikube start --vm-driver=none
+      - run:
+          name: Enable Minikube Addons
+          command: |
+            sudo minikube addons enable ingress
       - run:
           name: Login to Docker Hub
           command: echo "$DOCKER_HUB_PASSWORD" | docker login --username "normthelinuxguy" --password-stdin
       - run:
-          name: Build and push Docker images
+          name: Build and Push Backend Image
           command: |
-            docker build -t server ./server
-            docker tag server:latest docker.io/normthelinuxguy/my-backend-image:latest
+            docker build -t backend-image ./server
+            docker tag backend-image:latest docker.io/normthelinuxguy/my-backend-image:latest
             docker push docker.io/normthelinuxguy/my-backend-image:latest
-            docker build -t my-nginx-image ./nginx
-            docker tag my-nginx-image:latest docker.io/normthelinuxguy/my-nginx-image:latest
-            docker push docker.io/normthelinuxguy/my-nginx-image:latest
-            docker build -t client ./client 
-            docker tag client:latest docker.io/normthelinuxguy/my-frontend-image:latest
-            docker push docker.io/normthelinuxguy/my-frontend-image:latest
-
-  test:
-    docker:
-      - image: docker/compose:1.29.2
-    steps:
-      - checkout
       - run:
-          name: Run backend tests
+          name: Build and Push Frontend Image
           command: |
-            docker-compose
+            docker build -t frontend-image ./client
+            docker tag frontend-image:latest docker.io/normthelinuxguy/my-frontend-image:latest
+            docker push docker.io/normthelinuxguy/my-frontend-image:latest
+      - run:
+          name: Build and Push Nginx Image
+          command: |
+            docker build -t nginx-image ./nginx
+            docker tag nginx-image:latest docker.io/normthelinuxguy/my-nginx-image:latest
+            docker push docker.io/normthelinuxguy/my-nginx-image:latest
+      - run:
+          name: Deploy Backend to Kubernetes
+          command: |
+            kubectl create deployment backend --image=docker.io/normthelinuxguy/my-backend-image:latest
+            kubectl expose deployment backend --port=80 --target-port=80 --type=ClusterIP
+      - run:
+          name: Deploy Frontend to Kubernetes
+          command: |
+            kubectl create deployment frontend --image=docker.io/normthelinuxguy/my-frontend-image:latest
+            kubectl expose deployment frontend --port=80 --target-port=80 --type=ClusterIP
+      - run:
+          name: Deploy Nginx to Kubernetes
+          command: |
+            kubectl create deployment nginx --image=docker.io/normthelinuxguy/my-nginx-image:latest
+            kubectl expose deployment nginx --port=80 --target-port=80 --type=ClusterIP
+      - run:
+          name: Apply Ingress Rule
+          command: |
+            kubectl apply -f https://raw.githubusercontent.com/normthelinuxguy/my-nginx-image/main/kubernetes/ingress.yaml
+
 workflows:
   version: 2
-  build-and-test:
-    jobs:
-      - test
-      - build:
-          requires:
-            - test
