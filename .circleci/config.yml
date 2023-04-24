@@ -68,3 +68,10 @@ jobs:
           command: |
             sudo minikube start --vm-driver=none --apiserver-ips 192.168.59.101 --apiserver-name=192.168.59.101 --kubernetes-version v1.22.2
             sudo chown -R circle
+  workflows:
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
