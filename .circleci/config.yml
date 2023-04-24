@@ -55,19 +55,22 @@ jobs:
             docker tag client:latest docker.io/normthelinuxguy/my-frontend-image:latest
             docker push docker.io/normthelinuxguy/my-frontend-image:latest
 
-  deploy:
+ deploy:
    
     docker:
       - image: circleci/kubernetes:latest
     steps:
       - checkout
       - kubernetes/install
+      - kubernetes/configureversion:
+          version: "1.18.2"
       - kubernetes/configure:
           kubernetes-version: "1.18.2"
           context: "my-kubernetes-context"
       - kubernetes/apply:
           resource-configuration: "k8s/"
-          namespace: "default"
+          namespace: "my-namespace"
+
 
 workflows:
   build-and-deploy:
