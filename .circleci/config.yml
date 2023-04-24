@@ -69,7 +69,7 @@ jobs:
           command: |
             sudo minikube start --vm-driver
 
-  workflows:
+workflows:
   build-and-deploy:
     jobs:
       - build
