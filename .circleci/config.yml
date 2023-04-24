@@ -12,6 +12,11 @@ jobs:
             sudo apt-get update
             sudo apt-get -y install git ssh
       - run:
+            name: Set permissions for CircleCI user
+          command: |
+                sudo chown -R circleci:circleci /home/circleci
+
+      - run:
           name: Install Docker
           command: |
             sudo apt-get update
