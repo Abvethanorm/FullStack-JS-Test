@@ -66,8 +66,7 @@ jobs:
           command: echo "192.168.59.101/24" > ip.txt
       - run:
           name: Start minikube and set context
-          command: |
-            sudo minikube start --vm-driver
+          command: sudo minikube start --vm-driver
 
 workflows:
   build-and-deploy:
