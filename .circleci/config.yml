@@ -62,7 +62,7 @@ jobs:
             kubectl set image deployment/client-deployment client=docker.io/normthelinuxguy/my-frontend-image:latest
 
 workflows:
-  build-and-deploy:
+  deploy:
     jobs:
       - build:
           context: my-context
